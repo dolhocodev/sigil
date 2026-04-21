@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sigil.dev/schema/agreement.schema.json",
+  "title": "Sigil Agreement",
+  "description": "Schema for a cryptographically verified Git-native agreement",
+  "type": "object",
+  "required": ["id", "title", "type", "parties", "contentHash", "timestamp", "status"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique short UUID identifying the agreement",
+      "pattern": "^[a-f0-9]{8}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 200,
+      "description": "Human-readable title of the agreement"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["freelance", "cla", "sla", "milestone", "split"],
+      "description": "Agreement template type"
+    },
+    "parties": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 10,
+      "items": { "type": "string" },
+      "description": "GitHub usernames or emails of all parties"
+    },
+    "contentHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of the agreement text — immutability anchor"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 creation timestamp"
+    },
+    "expires": {
+      "oneOf": [
+        { "type": "string", "format": "date" },
+        { "type": "null" }
+      ],
+      "description": "Expiry date (YYYY-MM-DD) or null for no expiry"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "active", "fulfilled", "disputed", "expired"],
+      "description": "Current lifecycle status of the agreement"
+    },
+    "signatures": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of parties who have signed"
+    },
+    "gitCommit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$",
+      "description": "Git commit SHA where this agreement was published"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Optional extra fields (e.g., jurisdiction, currency, amount)"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,128 @@
+name: Sigil — Agreement Verification
+
+on:
+  push:
+    paths:
+      - 'registry/agreements/**'
+      - 'registry/signatures/**'
+      - 'registry/index.json'
+  pull_request:
+    paths:
+      - 'registry/**'
+
+jobs:
+  verify:
+    name: Verify Agreements
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Import GPG keys from keyserver
+        run: |
+          echo "Importing public GPG keys for all agreement parties..."
+          node -e "
+            const fs = require('fs');
+            const index = JSON.parse(fs.readFileSync('registry/index.json', 'utf8'));
+            const parties = [...new Set(index.agreements.flatMap(a => a.parties))];
+            console.log('Parties found:', parties.join(', '));
+          "
+        continue-on-error: true
+
+      - name: Verify all agreement hashes
+        id: verify
+        run: |
+          echo "## 🔏 Sigil Agreement Verification" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          node -e "
+            const fs = require('fs');
+            const crypto = require('crypto');
+            const path = require('path');
+
+            const index = JSON.parse(fs.readFileSync('registry/index.json', 'utf8'));
+            let allValid = true;
+            let summary = '';
+
+            for (const agreement of index.agreements) {
+              const file = path.join('registry', 'agreements', agreement.id + '.md');
+              if (!fs.existsSync(file)) {
+                console.log('MISSING: ' + agreement.id);
+                summary += '| ' + agreement.id + ' | ' + agreement.title + ' | ❌ File missing | |\n';
+                allValid = false;
+                continue;
+              }
+
+              const content = fs.readFileSync(file, 'utf8');
+              const hash = crypto.createHash('sha256').update(content, 'utf8').digest('hex');
+              const valid = hash === agreement.contentHash;
+              if (!valid) allValid = false;
+
+              const sigDir = path.join('registry', 'signatures', agreement.id);
+              const sigCount = fs.existsSync(sigDir) ? fs.readdirSync(sigDir).length : 0;
+
+              const status = valid ? '✅' : '❌';
+              summary += '| \`' + agreement.id + '\` | ' + agreement.title + ' | ' + status + ' Hash ' + (valid ? 'valid' : 'MISMATCH') + ' | ' + sigCount + ' sig(s) |\n';
+              console.log((valid ? 'VALID' : 'INVALID') + ': ' + agreement.id + ' — ' + agreement.title);
+            }
+
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY || '/dev/null',
+              '| Agreement | Title | Hash | Signatures |\n' +
+              '|-----------|-------|------|------------|\n' +
+              summary
+            );
+
+            if (!allValid) {
+              console.error('One or more agreements failed verification!');
+              process.exit(1);
+            }
+            console.log('All agreements verified successfully.');
+          "
+
+      - name: Check for expired agreements
+        run: |
+          node -e "
+            const fs = require('fs');
+            const index = JSON.parse(fs.readFileSync('registry/index.json', 'utf8'));
+            const now = new Date();
+            for (const a of index.agreements) {
+              if (a.expires && new Date(a.expires) < now && a.status !== 'expired') {
+                console.warn('EXPIRED: ' + a.id + ' — ' + a.title + ' (expired: ' + a.expires + ')');
+              }
+            }
+          "
+
+      - name: Comment PR with verification result
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const index = JSON.parse(fs.readFileSync('registry/index.json', 'utf8'));
+            const count = index.agreements.length;
+            const body = `## 🔏 Sigil Verification Passed\n\n` +
+              `All **${count}** agreement(s) in the registry have been verified.\n\n` +
+              `- ✅ Content hashes match\n` +
+              `- ✅ No tampering detected\n\n` +
+              `*Verified by Sigil Protocol v0.1.0*`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });

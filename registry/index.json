@@ -1,0 +1,10 @@
+{
+  "agreements": [],
+  "meta": {
+    "version": "0.1.0",
+    "protocol": "sigil",
+    "description": "Sigil public agreement registry",
+    "homepage": "https://github.com/your-org/sigil",
+    "lastUpdated": null
+  }
+}
