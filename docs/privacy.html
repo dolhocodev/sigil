@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | Sigil Protocol</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.344.0"></script>
+
+    <style>
+        :root {
+            --bg: #0b0f1a;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo-group img {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin: 3rem 0 1rem;
+            color: var(--primary);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        footer {
+            margin-top: 8rem;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo-group">
+        <img src="logo_new.png" alt="SIGIL">
+        <span>SIGIL</span>
+    </a>
+</header>
+
+<main>
+    <a href="index.html" class="back-link">
+        <i data-lucide="arrow-left" style="width: 18px;"></i>
+        Back to Documentation
+    </a>
+
+    <h1>Privacy Policy</h1>
+    <p>Last updated: April 21, 2026</p>
+
+    <p>Sigil is a decentralized, Git-native protocol. Our approach to privacy is built on the principle of zero data collection.</p>
+
+    <h2>1. Data Collection</h2>
+    <p>The Sigil protocol and its official CLI tool do not collect, store, or transmit any personal data to our servers. All agreement generation, hashing, and GPG signing occur locally on your machine.</p>
+
+    <h2>2. Third-Party Services</h2>
+    <p>Agreements created via Sigil are stored in Git repositories. If you choose to host these repositories on platforms like GitHub, GitLab, or Bitbucket, your data is subject to those platforms' privacy policies.</p>
+
+    <h2>3. Cryptographic Identity</h2>
+    <p>Sigil uses your existing GPG keys for identity verification. We never have access to your private keys. Public keys are only used locally to verify signatures within your own Git environment.</p>
+
+    <h2>4. Registry Privacy</h2>
+    <p>The optional Public Registry only stores cryptographic hashes (SHA-256) of agreements. These hashes act as anonymous pointers and do not contain any legible content or metadata from the original agreement.</p>
+
+    <h2>5. Changes to This Policy</h2>
+    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+
+    <p>For any questions regarding privacy, please contact the maintainers via the <a href="https://github.com/dolhocodev/sigil" style="color: var(--primary);">GitHub repository</a>.</p>
+</main>
+
+<footer>
+    © 2026 Sigil Protocol Contributors.
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+    });
+</script>
+
+</body>
+</html>

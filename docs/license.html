@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License | Sigil Protocol</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.344.0"></script>
+
+    <style>
+        :root {
+            --bg: #0b0f1a;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo-group img {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .license-box {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin: 3rem 0 1rem;
+            color: var(--primary);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo-group">
+        <img src="logo_new.png" alt="SIGIL">
+        <span>SIGIL</span>
+    </a>
+</header>
+
+<main>
+    <a href="index.html" class="back-link">
+        <i data-lucide="arrow-left" style="width: 18px;"></i>
+        Back to Documentation
+    </a>
+
+    <h1>License</h1>
+    <p>Sigil is open-source software licensed under the <strong>GNU Affero General Public License v3.0 (AGPL-3.0)</strong>.</p>
+
+    <h2>Summary</h2>
+    <p>The AGPL-3.0 is a strong copyleft license. It ensures that if you modify the software and run it as a service over a network, you must share your modifications with the community.</p>
+
+    <ul>
+        <li><strong>Commercial use:</strong> Permitted.</li>
+        <li><strong>Modification:</strong> Permitted, but must be shared if distributed or run as a service.</li>
+        <li><strong>Distribution:</strong> Permitted under the same license.</li>
+        <li><strong>SaaS Rights:</strong> If you use Sigil in a web service, the source code must be available to users.</li>
+    </ul>
+
+    <h2>Full License Text</h2>
+    <div class="license-box">
+GNU AFFERO GENERAL PUBLIC LICENSE
+Version 3, 19 November 2007
+
+Copyright (C) 2026 Sigil Protocol Contributors.
+
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.
+
+Preamble
+
+The GNU Affero General Public License is a free, copyleft license for
+software and other kinds of works, specifically designed to ensure
+that modified versions of the software remain available to the public
+even if they are run over a network.
+
+... (Full AGPL-3.0 text available in the root LICENSE file)
+    </div>
+
+    <p>You can view the full legal text in the <a href="https://github.com/dolhocodev/sigil/blob/main/LICENSE" style="color: var(--primary);">GitHub Repository</a>.</p>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+    });
+</script>
+
+</body>
+</html>

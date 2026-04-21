@@ -1,346 +1,766 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sigil — Your signature, sealed in history.</title>
-<meta name="description" content="A Git-native, GPG-verified cryptographic agreement protocol. No blockchain. No intermediaries. No cost.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --p:#7C3AED;--p2:#A78BFA;--p3:#4C1D95;
-  --bg:#09090b;--bg2:#111115;--bg3:#18181f;
-  --border:#27272a;--text:#e4e4e7;--muted:#71717a;
-  --green:#22c55e;--red:#ef4444;--yellow:#eab308;
-}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
-a{color:var(--p2);text-decoration:none}
-a:hover{color:#fff}
-code,pre,kbd{font-family:'JetBrains Mono',monospace}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sigil Protocol — Cryptographic Agreement Documentation</title>
+    <meta name="description" content="Official documentation for Sigil, a Git-native agreement protocol. High-integrity, verifiable, and secure.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo_new.png">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.344.0"></script>
 
-/* NAV */
-nav{position:fixed;top:0;width:100%;z-index:100;backdrop-filter:blur(16px);background:rgba(9,9,11,.8);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:1100px;margin:0 auto;padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:1.1rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:.5rem}
-.logo span{color:var(--p2)}
-.nav-links{display:flex;gap:1.75rem;font-size:.875rem;color:var(--muted)}
-.nav-links a{color:var(--muted);transition:color .2s}
-.nav-links a:hover{color:#fff}
-.nav-btn{background:var(--p);color:#fff;padding:.45rem 1.1rem;border-radius:8px;font-size:.875rem;font-weight:600;transition:background .2s}
-.nav-btn:hover{background:#6d28d9;color:#fff}
+    <style>
+        :root {
+            --bg: #0b0f1a;
+            --header-bg: rgba(11, 15, 26, 0.8);
+            --sidebar-bg: #0f172a;
+            --card-bg: #1e293b;
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.2);
+            --accent: #818cf8;
+            --success: #10b981;
+            --sidebar-width: 280px;
+            --header-height: 64px;
+        }
 
-/* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 1.5rem 4rem;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(124,58,237,.25),transparent);pointer-events:none}
-.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.4);border-radius:99px;padding:.35rem 1rem;font-size:.8rem;color:var(--p2);font-weight:500;margin-bottom:1.5rem;animation:fadeUp .6s ease both}
-.hero h1{font-size:clamp(2.5rem,7vw,5rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:1.25rem;animation:fadeUp .7s .1s ease both}
-.hero h1 span{background:linear-gradient(135deg,#a78bfa,#7c3aed,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:1.2rem;color:var(--muted);max-width:600px;margin-bottom:2.5rem;animation:fadeUp .7s .2s ease both}
-.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadeUp .7s .3s ease both}
-.btn-primary{background:var(--p);color:#fff;padding:.75rem 1.75rem;border-radius:10px;font-weight:600;font-size:1rem;transition:all .2s;box-shadow:0 0 30px rgba(124,58,237,.4)}
-.btn-primary:hover{background:#6d28d9;color:#fff;transform:translateY(-2px);box-shadow:0 0 40px rgba(124,58,237,.6)}
-.btn-ghost{background:transparent;color:var(--text);padding:.75rem 1.75rem;border-radius:10px;font-weight:600;font-size:1rem;border:1px solid var(--border);transition:all .2s}
-.btn-ghost:hover{border-color:var(--p2);color:var(--p2)}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* INSTALL BADGE */
-.install-bar{margin-top:2.5rem;animation:fadeUp .7s .4s ease both}
-.install-cmd{display:inline-flex;align-items:center;gap:1rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.75rem 1.25rem;font-size:.95rem}
-.install-cmd code{color:var(--p2)}
-.copy-btn{background:var(--border);border:none;color:var(--muted);padding:.3rem .7rem;border-radius:6px;cursor:pointer;font-size:.8rem;transition:all .2s;font-family:inherit}
-.copy-btn:hover{background:var(--p);color:#fff}
+        html {
+            scroll-behavior: smooth;
+            background: var(--bg);
+        }
 
-/* TERMINAL */
-.terminal-wrap{width:100%;max-width:720px;margin:3rem auto 0;animation:fadeUp .8s .5s ease both}
-.terminal{background:#0d0d12;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,.6),0 0 0 1px rgba(124,58,237,.1)}
-.terminal-bar{background:#1a1a24;padding:.75rem 1rem;display:flex;align-items:center;gap:.5rem}
-.dot{width:12px;height:12px;border-radius:50%}
-.dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
-.terminal-title{flex:1;text-align:center;font-size:.8rem;color:var(--muted)}
-.terminal-body{padding:1.5rem;font-size:.85rem;line-height:1.8}
-.t-prompt{color:var(--p2)}.t-cmd{color:#e4e4e7}.t-out{color:var(--muted)}
-.t-box{color:#a78bfa;border:1px solid #4c1d95;display:inline-block;padding:.5rem 1.5rem;border-radius:8px;margin:.5rem 0}
-.t-ok{color:var(--green)}.t-id{color:#f59e0b}.t-hash{color:#60a5fa}
-.cursor{display:inline-block;width:2px;height:1em;background:var(--p2);animation:blink 1s step-end infinite;vertical-align:text-bottom}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
 
-/* SECTIONS */
-section{max-width:1100px;margin:0 auto;padding:5rem 1.5rem}
-.section-label{font-size:.8rem;font-weight:600;color:var(--p2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem}
-.section-title{font-size:clamp(1.75rem,4vw,2.5rem);font-weight:800;letter-spacing:-.02em;margin-bottom:1rem}
-.section-sub{color:var(--muted);font-size:1.05rem;max-width:560px}
-hr.divider{border:none;border-top:1px solid var(--border);margin:0}
+        h1, h2, h3, h4 {
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
 
-/* FEATURES GRID */
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:3rem}
-.feature{background:var(--bg2);padding:2rem;transition:background .2s}
-.feature:hover{background:var(--bg3)}
-.feature-icon{font-size:1.75rem;margin-bottom:1rem}
-.feature h3{font-size:1rem;font-weight:700;margin-bottom:.5rem}
-.feature p{font-size:.9rem;color:var(--muted);line-height:1.6}
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
 
-/* HOW IT WORKS */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:3rem}
-.step{position:relative;padding:1.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:12px}
-.step-num{width:36px;height:36px;background:linear-gradient(135deg,var(--p3),var(--p));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;margin-bottom:1rem}
-.step h4{font-size:.95rem;font-weight:700;margin-bottom:.4rem}
-.step p{font-size:.85rem;color:var(--muted)}
-.step code{font-size:.8rem;color:var(--p2);background:rgba(124,58,237,.1);padding:.1rem .4rem;border-radius:4px}
+        code, pre {
+            font-family: 'JetBrains Mono', monospace;
+        }
 
-/* COMPARISON TABLE */
-.table-wrap{overflow-x:auto;margin-top:2.5rem}
-table{width:100%;border-collapse:collapse;font-size:.9rem}
-th{padding:.9rem 1.25rem;background:var(--bg3);color:var(--muted);font-weight:600;text-align:left;border-bottom:1px solid var(--border)}
-td{padding:.9rem 1.25rem;border-bottom:1px solid var(--border);vertical-align:middle}
-tr:hover td{background:rgba(124,58,237,.04)}
-.check{color:var(--green);font-size:1rem}
-.cross{color:var(--red);font-size:1rem}
-.hl{color:#fff;font-weight:600}
+        /* Layout */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-/* TEMPLATES */
-.templates{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:2.5rem}
-.tmpl{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:all .2s;cursor:default}
-.tmpl:hover{border-color:var(--p);transform:translateY(-2px)}
-.tmpl-icon{font-size:1.5rem;margin-bottom:.75rem}
-.tmpl h4{font-size:.95rem;font-weight:700;margin-bottom:.4rem}
-.tmpl p{font-size:.82rem;color:var(--muted)}
-.tmpl code{font-size:.78rem;color:var(--p2);background:rgba(124,58,237,.12);padding:.15rem .5rem;border-radius:4px;display:inline-block;margin-top:.5rem}
+        header {
+            height: var(--header-height);
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-/* CODE BLOCK */
-.code-block{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;margin-top:1rem;overflow-x:auto}
-.code-block pre{font-size:.85rem;line-height:1.8;color:#c4b5fd}
-.code-block .k{color:#f472b6}.code-block .s{color:#86efac}.code-block .c{color:#52525b}
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.05em;
+        }
 
-/* MATH */
-.math-card{background:var(--bg2);border:1px solid rgba(124,58,237,.3);border-radius:16px;padding:2rem;margin-top:2.5rem}
-.math-card pre{font-size:.85rem;color:var(--p2);line-height:2;overflow-x:auto}
+        .logo-group img {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+        }
 
-/* CTA SECTION */
-.cta-section{text-align:center;padding:5rem 1.5rem;background:linear-gradient(180deg,transparent,rgba(124,58,237,.08),transparent)}
-.cta-section h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:800;margin-bottom:1rem}
-.cta-section p{color:var(--muted);margin-bottom:2rem;font-size:1.05rem}
+        .header-links {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
 
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;color:var(--muted);font-size:.85rem}
-footer a{color:var(--muted)}.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+        .header-links a:hover {
+            color: #fff;
+        }
 
-/* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-@keyframes blink{50%{opacity:0}}
-</style>
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        /* Hero / Presentation */
+        .hero {
+            padding: 8rem 2rem;
+            text-align: center;
+            background: radial-gradient(circle at center top, rgba(99, 102, 241, 0.1), transparent 70%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        /* Main Content with Sidebar */
+        .docs-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+
+        aside {
+            width: var(--sidebar-width);
+            border-right: 1px solid var(--border);
+            padding: 3rem 1.5rem;
+            position: sticky;
+            top: var(--header-height);
+            height: calc(100vh - var(--header-height));
+            overflow-y: auto;
+        }
+
+        .nav-group {
+            margin-bottom: 2.5rem;
+        }
+
+        .nav-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .nav-item i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .docs-content {
+            flex: 1;
+            padding: 4rem 4rem 8rem;
+            max-width: 900px;
+        }
+
+        section {
+            margin-bottom: 8rem;
+            scroll-margin-top: 100px;
+        }
+
+        .section-tag {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--sidebar-bg);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            background: #111b31;
+            transform: translateY(-4px);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Workflow Steps */
+        .workflow {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .step-num {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Terminal */
+        .terminal {
+            background: #020617;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .terminal-header {
+            background: #0f172a;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #334155; }
+
+        .terminal-body {
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: #94a3b8;
+        }
+
+        .t-primary { color: var(--primary); }
+        .t-white { color: #fff; font-weight: 600; }
+        .t-success { color: var(--success); }
+
+        /* Comparison Table */
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--sidebar-bg);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem 1.5rem;
+            background: rgba(255,255,255,0.02);
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        .table-sigil {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            padding: 6rem 2rem;
+            border-top: 1px solid var(--border);
+            background: #020617;
+            text-align: center;
+        }
+
+        .footer-logo {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+
+        .footer-logo img {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .docs-content { padding: 4rem 2rem; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="logo"><span>◆</span> SIGIL</div>
-    <div class="nav-links">
-      <a href="#how">How it works</a>
-      <a href="#templates">Templates</a>
-      <a href="#compare">Compare</a>
-      <a href="#math">Protocol</a>
+<div class="app-container">
+    <header>
+        <div class="logo-group">
+            <img src="logo_new.png" alt="SIGIL" onerror="this.style.display='none'">
+            <div class="logo-svg-fallback" style="display: none; width: 32px; height: 32px; background: var(--primary); border-radius: 6px; align-items: center; justify-content: center;">
+                <i data-lucide="shield-check" style="width: 20px; color: #fff;"></i>
+            </div>
+            <span>SIGIL</span>
+        </div>
+        <div class="header-links">
+            <a href="https://github.com/dolhocodev/sigil">GitHub</a>
+            <a href="https://npmjs.com/package/sigil-protocol">npm</a>
+            <a href="#introduction">Documentation</a>
+        </div>
+        <a href="https://github.com/dolhocodev/sigil" class="btn-primary">Initialize Protocol</a>
+    </header>
+
+    <!-- Marketing Hero -->
+    <section class="hero">
+        <h1>Your signature,<br>sealed in history.</h1>
+        <p>A Git-native, GPG-verified cryptographic agreement protocol. Built for institutional-grade integrity in a distributed world.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <a href="#introduction" class="btn-primary" style="padding: 0.75rem 2rem; font-size: 1rem;">Browse Specs</a>
+            <a href="https://github.com/dolhocodev/sigil" class="btn-primary" style="background: transparent; border: 1px solid var(--border);">Repository</a>
+        </div>
+    </section>
+
+    <!-- Docs Layout -->
+    <div class="docs-container">
+        <aside>
+            <div class="nav-group">
+                <span class="nav-label">Introduction</span>
+                <a href="#introduction" class="nav-item active"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Overview</a>
+                <a href="#features" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.8a2 2 0 0 0 0 3.6l8.57 4.62a2 2 0 0 0 1.66 0L21.4 10.4a2 2 0 0 0 0-3.6z"/><path d="m2 14.2 8.57 4.62a2 2 0 0 0 1.66 0L20.8 14.2"/><path d="m2 18.2 8.57 4.62a2 2 0 0 0 1.66 0L20.8 18.2"/></svg> Features</a>
+            </div>
+
+            <div class="nav-group">
+                <span class="nav-label">Workflow</span>
+                <a href="#how-it-works" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg> How it Works</a>
+                <a href="#cli" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg> CLI Reference</a>
+            </div>
+
+            <div class="nav-group">
+                <span class="nav-label">Registry</span>
+                <a href="#templates" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Templates</a>
+                <a href="#registry" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg> Public Registry</a>
+            </div>
+
+            <div class="nav-group">
+                <span class="nav-label">Resources</span>
+                <a href="#comparison" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg> Comparison</a>
+                <a href="#specs" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg> Technical Spec</a>
+            </div>
+        </aside>
+
+        <main class="docs-content">
+            <!-- Overview -->
+            <section id="introduction">
+                <span class="section-tag">Overview</span>
+                <h2 class="section-title">Cryptographic Integrity.</h2>
+                <p class="section-desc">Sigil is a protocol that anchors human agreements into the Git Directed Acyclic Graph (DAG). It ensures that once a contract is signed, it cannot be altered without breaking the cryptographic chain.</p>
+                <div class="card" style="background: rgba(99, 102, 241, 0.05); border-color: var(--primary);">
+                    <p style="color: #fff; font-weight: 500;">Sigil is not a blockchain. It uses existing, proven technologies (Git and GPG) to provide absolute proof of content and consent at zero cost.</p>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section id="features">
+                <span class="section-tag">Features</span>
+                <h2 class="section-title">Sovereign Proof.</h2>
+                <div class="feature-grid">
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+                        </div>
+                        <h3>Immutable</h3>
+                        <p>SHA-256 content hashing creates a permanent link between the document and its signatures.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2a5 5 0 1 0-2 2l7-7Z"/><path d="m15.5 8.5 2 2"/><path d="m9 11 3 3L7 19l-2-2 4-4Z"/></svg>
+                        </div>
+                        <h3>GPG-Verified</h3>
+                        <p>Signatures are applied via your local GPG keychain, ensuring absolute proof of identity.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
+                        </div>
+                        <h3>Platform Agnostic</h3>
+                        <p>Agreements are stored in Git. Sync via GitHub, GitLab, or your own private server.</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- How it Works -->
+            <section id="how-it-works">
+                <span class="section-tag">Workflow</span>
+                <h2 class="section-title">How it Works.</h2>
+                <p class="section-desc">The Sigil lifecycle is designed for simplicity and cryptographic rigor.</p>
+                
+                <div class="workflow">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <div class="step-content">
+                            <h3>Initialization</h3>
+                            <p>Choose a template and define the parties. Sigil generates a unique agreement dossier with a SHA-256 anchor.</p>
+                            <div class="terminal">
+                                <div class="terminal-body"><span class="t-primary">$</span> sigil init --template freelance</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <div class="step-content">
+                            <h3>Content Sealing</h3>
+                            <p>Once the content is finalized, it is hashed. This hash becomes the 'dossier ID' that all parties will sign.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <div class="step-content">
+                            <h3>Cryptographic Signing</h3>
+                            <p>Each party applies their GPG signature to the dossier ID. Sigil verifies the signature against the party's public key.</p>
+                            <div class="terminal">
+                                <div class="terminal-body"><span class="t-primary">$</span> sigil sign a3f9c12e</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">4</div>
+                        <div class="step-content">
+                            <h3>Verification</h3>
+                            <p>At any point, any party can verify the integrity of the agreement and all signatures in milliseconds.</p>
+                            <div class="terminal">
+                                <div class="terminal-body"><span class="t-primary">$</span> sigil verify a3f9c12e</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CLI Reference -->
+            <section id="cli">
+                <span class="section-tag">CLI Reference</span>
+                <h2 class="section-title">Command Line Interface.</h2>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    </div>
+                    <div class="terminal-body">
+                        <div><span class="t-white">sigil init</span>      Initialize a new agreement from a template</div>
+                        <div><span class="t-white">sigil sign</span>      Apply GPG signature to a specific dossier</div>
+                        <div><span class="t-white">sigil verify</span>    Validate hashes and signatures of a dossier</div>
+                        <div><span class="t-white">sigil list</span>      Show all agreements in the current registry</div>
+                        <div><span class="t-white">sigil help</span>      Display help information</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Templates -->
+            <section id="templates">
+                <span class="section-tag">Templates</span>
+                <h2 class="section-title">Agreement Registry.</h2>
+                <p class="section-desc">Sigil includes production-ready templates for the most common collaborative scenarios.</p>
+                <div class="feature-grid">
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        </div>
+                        <h3>Freelance</h3>
+                        <p>Service delivery terms, IP transfer, and payment milestones.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><path d="M17 13.5a2.5 2.5 0 1 0-3-3L11 14l-3 3-1 1h4l3-3z"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/></svg>
+                        </div>
+                        <h3>CLA</h3>
+                        <p>Contributor License Agreements for open-source maintenance.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <h3>SLA</h3>
+                        <p>Standard service level agreements with response targets.</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Public Registry -->
+            <section id="registry">
+                <span class="section-tag">Public Registry</span>
+                <h2 class="section-title">The Global Index.</h2>
+                <p class="section-desc">A centralized index of decentralized agreements. Publicly verifiable, yet privately owned.</p>
+                <div class="card">
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">The public registry provides a way to timestamp and announce agreements to the world without revealing private details, using hashes as public pointers.</p>
+                </div>
+            </section>
+
+            <!-- Comparison -->
+            <section id="comparison">
+                <span class="section-tag">Comparison</span>
+                <h2 class="section-title">The Protocol Advantage.</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>DocuSign / SaaS</th>
+                                <th>Blockchain</th>
+                                <th class="table-sigil">Sigil Protocol</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Unit Cost</td>
+                                <td>$10 - $40 / mo</td>
+                                <td>Variable Gas</td>
+                                <td class="table-sigil">$0.00</td>
+                            </tr>
+                            <tr>
+                                <td>Infrastructure</td>
+                                <td>Centralized Cloud</td>
+                                <td>Global Nodes</td>
+                                <td class="table-sigil">Local Git / GPG</td>
+                            </tr>
+                            <tr>
+                                <td>Offline Access</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td class="table-sigil">Native (Full)</td>
+                            </tr>
+                            <tr>
+                                <td>Setup Time</td>
+                                <td>Minutes</td>
+                                <td>Hours / Days</td>
+                                <td class="table-sigil">30 Seconds</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Specs -->
+            <section id="specs">
+                <span class="section-tag">Specifications</span>
+                <h2 class="section-title">Technical Reference.</h2>
+                <div class="terminal">
+                    <div class="terminal-body" style="color: var(--text-muted);">
+<pre>
+SIGIL_V1_SPEC:
+  HASH: SHA-256
+  SIGN: OpenPGP (RSA-4096 / EdDSA)
+  ARCH: Git Merkle Tree
+
+INTEGRITY_CHECK:
+  1. Calculate H(content)
+  2. For each party P in Parties:
+     Verify GPG_Sign(P.Sig, H(content)) == P.PubKey
+</pre>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
-    <a href="https://github.com/dolhocodev/sigil" class="nav-btn">GitHub ↗</a>
-  </div>
-</nav>
 
-<section class="hero">
-  <div class="hero-badge">◆ Git-native · GPG-verified · Zero cost</div>
-  <h1>Your signature,<br><span>sealed in history.</span></h1>
-  <p class="hero-sub">Cryptographically bind freelance contracts, CLAs, SLAs, and milestones directly into your Git history — no blockchain, no intermediaries, no trust required.</p>
-  <div class="hero-cta">
-    <a href="https://github.com/dolhocodev/sigil" class="btn-primary">View on GitHub</a>
-    <a href="#how" class="btn-ghost">How it works ↓</a>
-  </div>
-  <div class="install-bar">
-    <div class="install-cmd">
-      <span style="color:var(--muted);font-size:.85rem">npm</span>
-      <code>npm install -g sigil-protocol</code>
-      <button class="copy-btn" onclick="navigator.clipboard.writeText('npm install -g sigil-protocol');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
-    </div>
-  </div>
-
-  <div class="terminal-wrap">
-    <div class="terminal">
-      <div class="terminal-bar">
-        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
-        <div class="terminal-title">sigil — agreement protocol</div>
-      </div>
-      <div class="terminal-body">
-        <div><span class="t-prompt">$ </span><span class="t-cmd">sigil init --template freelance</span></div>
-        <br>
-        <div class="t-box">◆ SIGIL<br>Your signature, sealed in history.</div>
-        <br>
-        <div class="t-out">? Agreement type: <span style="color:#e4e4e7">💼 Freelance Contract</span></div>
-        <div class="t-out">? Title: <span style="color:#e4e4e7">Frontend Development — Q2 2026</span></div>
-        <div class="t-out">? Party A: <span style="color:#e4e4e7">alice@github.com</span></div>
-        <div class="t-out">? Party B: <span style="color:#e4e4e7">bob@github.com</span></div>
-        <br>
-        <div><span class="t-ok">✓ Agreement created!</span></div>
-        <div>  ID:   <span class="t-id">a3f9c12e</span></div>
-        <div>  Hash: <span class="t-hash">8d4b2f1a9c7e3b5d...</span></div>
-        <br>
-        <div><span class="t-prompt">$ </span><span class="t-cmd">sigil sign a3f9c12e</span></div>
-        <div><span class="t-ok">✓ GPG signature saved for: alice</span></div>
-        <br>
-        <div><span class="t-prompt">$ </span><span class="t-cmd">sigil verify a3f9c12e</span></div>
-        <div>  Status: <span style="background:#16a34a;color:#fff;padding:.1rem .5rem;border-radius:4px;font-size:.8rem">ACTIVE</span></div>
-        <div>  Hash:   <span class="t-ok">✓ Verified (untampered)</span></div>
-        <div>  Sigs:   <span class="t-ok">✓ 2 signatures: alice.asc, bob.asc</span></div>
-        <div><span class="t-prompt">$ </span><span class="cursor"></span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<section>
-  <div class="section-label">Why Sigil</div>
-  <h2 class="section-title">Everything you need.<br>Nothing you don't.</h2>
-  <p class="section-sub">Built on tools every developer already has — Git and GPG. No new accounts, no wallets, no gas fees.</p>
-  <div class="features">
-    <div class="feature">
-      <div class="feature-icon">🔒</div>
-      <h3>Cryptographically Immutable</h3>
-      <p>SHA-256 content hashing means any modification to a signed agreement is detected instantly. Forgery is computationally infeasible.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🌐</div>
-      <h3>Truly Decentralized</h3>
-      <p>Every party holds a local git clone. If GitHub goes offline, your agreements survive — untouched, verifiable, permanent.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">⚡</div>
-      <h3>Zero Infrastructure Cost</h3>
-      <p>Runs entirely on GitHub's free infrastructure. No blockchain nodes, no servers, no gas. Forever free for the public registry.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🧑‍💻</div>
-      <h3>Developer-Native</h3>
-      <p>Works with <code>git</code> and <code>gpg</code> you already know. No new tools, no new concepts. Sigil fits your existing workflow.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🤖</div>
-      <h3>GitHub Actions Verified</h3>
-      <p>Every PR to the public registry is automatically verified by GitHub Actions — signatures, hashes, and expiry checks.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">📜</div>
-      <h3>5 Ready-Made Templates</h3>
-      <p>Freelance contracts, CLAs, SLAs, milestone agreements, and revenue splits — all structured, versioned, and legally readable.</p>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<section id="how">
-  <div class="section-label">Workflow</div>
-  <h2 class="section-title">From idea to sealed agreement<br>in under 2 minutes.</h2>
-  <div class="steps">
-    <div class="step"><div class="step-num">1</div><h4>Initialize</h4><p>Run <code>sigil init</code> and choose a template. Fill in parties, scope, and expiry interactively.</p></div>
-    <div class="step"><div class="step-num">2</div><h4>Hash</h4><p>Sigil computes a SHA-256 content hash — your tamper-proof anchor. The hash is embedded in the document.</p></div>
-    <div class="step"><div class="step-num">3</div><h4>Sign</h4><p>Each party runs <code>sigil sign &lt;id&gt;</code>. Your GPG key signs the content hash. Works without GPG too (hash-only mode).</p></div>
-    <div class="step"><div class="step-num">4</div><h4>Verify</h4><p>Run <code>sigil verify &lt;id&gt;</code> anytime. Checks hash integrity and all GPG signatures simultaneously.</p></div>
-    <div class="step"><div class="step-num">5</div><h4>Publish</h4><p>Run <code>sigil publish &lt;id&gt;</code> to commit to git history and open a PR to the public registry.</p></div>
-    <div class="step"><div class="step-num">6</div><h4>Immutable</h4><p>GitHub Actions auto-verifies on every push. The agreement is now permanently sealed in git history.</p></div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<section id="templates">
-  <div class="section-label">Templates</div>
-  <h2 class="section-title">Ready for any agreement.</h2>
-  <p class="section-sub">Five production-ready templates — structured, versioned, and human-readable.</p>
-  <div class="templates">
-    <div class="tmpl"><div class="tmpl-icon">💼</div><h4>Freelance</h4><p>Client ↔ contractor work agreement with scope, payment, and IP terms.</p><code>--template freelance</code></div>
-    <div class="tmpl"><div class="tmpl-icon">📜</div><h4>CLA</h4><p>Contributor License Agreement for open-source projects. Replace your PDF CLAs.</p><code>--template cla</code></div>
-    <div class="tmpl"><div class="tmpl-icon">⚡</div><h4>SLA</h4><p>Service Level Agreement with uptime guarantees, incident response, and remedies.</p><code>--template sla</code></div>
-    <div class="tmpl"><div class="tmpl-icon">🎯</div><h4>Milestone</h4><p>Delivery commitment with success criteria and timeline between teams.</p><code>--template milestone</code></div>
-    <div class="tmpl"><div class="tmpl-icon">💰</div><h4>Revenue Split</h4><p>Revenue sharing agreement with split percentages and triggering events.</p><code>--template split</code></div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<section id="compare">
-  <div class="section-label">Comparison</div>
-  <h2 class="section-title">Why not DocuSign or blockchain?</h2>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr><th>Feature</th><th>DocuSign</th><th>Smart Contract</th><th class="hl">◆ Sigil</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Cost per agreement</td><td>$10–$40/mo</td><td>$0.01–$50 gas</td><td class="hl">$0</td></tr>
-        <tr><td>Developer familiarity</td><td><span class="cross">✗</span> New portal</td><td><span class="cross">✗</span> Solidity, wallets</td><td class="hl"><span class="check">✓</span> git + gpg</td></tr>
-        <tr><td>Cryptographic proof</td><td><span class="cross">✗</span> Trust provider</td><td><span class="check">✓</span></td><td class="hl"><span class="check">✓</span> GPG + SHA-256</td></tr>
-        <tr><td>Immutability</td><td><span class="cross">✗</span> Centralized DB</td><td><span class="check">✓</span></td><td class="hl"><span class="check">✓</span> Git DAG</td></tr>
-        <tr><td>Offline access</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td class="hl"><span class="check">✓</span> Local clone</td></tr>
-        <tr><td>Public auditability</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td class="hl"><span class="check">✓</span></td></tr>
-        <tr><td>Setup time</td><td>Hours</td><td>Days</td><td class="hl">30 seconds</td></tr>
-        <tr><td>Infrastructure needed</td><td>SaaS account</td><td>Blockchain node</td><td class="hl">None (GitHub free)</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<hr class="divider">
-
-<section id="math">
-  <div class="section-label">Protocol</div>
-  <h2 class="section-title">Mathematically guaranteed.</h2>
-  <p class="section-sub">Git's DAG structure is cryptographically equivalent to a permissioned blockchain — at zero operational cost.</p>
-  <div class="math-card">
-    <pre>H(commit) = SHA256(tree ∥ parent ∥ author ∥ timestamp ∥ message)
-
-Valid Agreement ⟺
-  ∀ party ∈ parties:
-    verify_gpg(party.signature, SHA256(agreement_text)) = true
-  ∧ contentHash = SHA256(current_file_content)
-  ∧ commit is reachable from both parties' local clone
-
-Tamper Detection:
-  Modify any byte → SHA256 changes → all GPG sigs invalid
-  Complexity of forgery: 2^256 operations (infeasible)</pre>
-  </div>
-  <div style="margin-top:2rem">
-    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">Quick reference</h3>
-    <div class="code-block"><pre><span class="c"># Create</span>
-sigil init
-
-<span class="c"># Sign</span>
-sigil sign &lt;id&gt; [--key &lt;gpg-key-id&gt;]
-
-<span class="c"># Verify</span>
-sigil verify &lt;id&gt;
-
-<span class="c"># List all agreements</span>
-sigil list
-
-<span class="c"># Publish to registry</span>
-sigil publish &lt;id&gt;</pre></div>
-  </div>
-</section>
-
-<div class="cta-section">
-  <h2>Ready to seal your first agreement?</h2>
-  <p>Join the Sigil public registry. Your signature, sealed in history.</p>
-  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-    <a href="https://github.com/dolhocodev/sigil" class="btn-primary">View on GitHub ↗</a>
-    <a href="https://github.com/dolhocodev/sigil/blob/main/README.md" class="btn-ghost">Documentation</a>
-  </div>
+    <footer>
+        <div class="footer-logo">
+            <img src="logo_new.png" alt="SIGIL" onerror="this.style.display='none'">
+            <span>SIGIL</span>
+        </div>
+        <div class="footer-links">
+            <a href="https://github.com/dolhocodev/sigil">GitHub</a>
+            <a href="https://npmjs.com/package/sigil-protocol">npm</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="license.html">License</a>
+        </div>
+        <p class="copyright">© 2026 Sigil Protocol Contributors. AGPL-3.0 Licensed.</p>
+    </footer>
 </div>
 
-<footer>
-  <div class="footer-inner">
-    <span><span style="color:var(--p2)">◆ SIGIL</span> — Ancient word. Cryptographic proof.</span>
-    <span>By <a href="https://github.com/dolhocodev">dolhocodev</a> · <a href="https://github.com/dolhocodev/sigil/blob/main/LICENSE">AGPL-3.0</a> · <a href="https://github.com/dolhocodev/sigil">GitHub</a></span>
-  </div>
-</footer>
+<script>
+    // Initialize Lucide icons
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+    });
+
+    // Smooth scroll and active state
+    const navItems = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('section');
+
+    navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    navItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            }
+        });
+    });
+
+    // Intersection Observer for scroll highlighting
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 150) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href') === '#' + current) {
+                item.classList.add('active');
+            }
+        });
+    });
+    // Logo fallback logic
+    document.querySelectorAll('.logo-group img, .footer-logo img').forEach(img => {
+        img.addEventListener('error', function() {
+            const fallback = this.parentElement.querySelector('.logo-svg-fallback');
+            if (fallback) {
+                fallback.style.display = 'flex';
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
