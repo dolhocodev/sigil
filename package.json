@@ -1,5 +1,5 @@
 {
-  "name": "sigil-protocol",
+  "name": "@dolhocodev/sigil",
   "version": "0.1.0",
   "description": "Your signature, sealed in history. A Git-native cryptographic agreement protocol.",
   "keywords": ["git", "gpg", "contracts", "agreements", "protocol", "cryptography", "signing"],
@@ -11,13 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dolhocodev/sigil.git"
+    "url": "git+https://github.com/dolhocodev/sigil.git"
   },
   "license": "AGPL-3.0",
   "bin": {
-    "sigil": "./cli/sigil.js"
+    "sigil": "cli/sigil.js"
   },
-  "main": "./cli/sigil.js",
+  "main": "cli/sigil.js",
   "scripts": {
     "test": "node cli/sigil.js --help",
     "demo": "node cli/sigil.js demo"

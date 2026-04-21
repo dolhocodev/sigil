@@ -16,7 +16,7 @@ directly into your Git history — no blockchain, no intermediaries, no trust re
 
 [![Protocol](https://img.shields.io/badge/Protocol-Sigil%20v0.1.0-7C3AED?style=for-the-badge&logo=git)](https://github.com/dolhocodev/sigil)
 [![License](https://img.shields.io/badge/License-AGPL--3.0-A78BFA?style=for-the-badge)](LICENSE)
-[![npm](https://img.shields.io/badge/npm-sigil--protocol-6D28D9?style=for-the-badge&logo=npm)](https://npmjs.com/package/sigil-protocol)
+[![npm](https://img.shields.io/badge/npm-%40dolhocodev%2Fsigil-6D28D9?style=for-the-badge&logo=npm)](https://npmjs.com/package/@dolhocodev/sigil)
 [![Agreements](https://img.shields.io/badge/Agreements%20in%20Registry-0-4C1D95?style=for-the-badge)](registry/index.json)
 [![Site](https://img.shields.io/badge/Docs-dolhocodev.github.io%2Fsigil-4C1D95?style=for-the-badge&logo=github)](https://dolhocodev.github.io/sigil)
 
@@ -61,7 +61,7 @@ Valid Agreement ⟺
 ### Install
 
 ```bash
-npm install -g sigil-protocol
+npm install -g @dolhocodev/sigil
 ```
 
 ### Create an Agreement
@@ -195,7 +195,7 @@ We use [Sigil](https://github.com/dolhocodev/sigil) for contributor agreements.
 
 Before your first PR is merged, run:
 \`\`\`bash
-npx sigil-protocol init --template cla --party your@email.com --party project@org.com
+npx @dolhocodev/sigil init --template cla --party your@email.com --party project@org.com
 \`\`\`
 ```
 
