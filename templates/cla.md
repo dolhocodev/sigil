@@ -45,7 +45,7 @@ The Contributor represents that:
 
 ## Moral Rights
 
-The Contributor retains moral rights and will be credited appropriately.
+The Contributor retains moral rights and will be credited appropriately in the project's contributor records.
 
 ---
 
@@ -53,6 +53,7 @@ The Contributor retains moral rights and will be credited appropriately.
 
 - **Content Hash (SHA-256)**: `{contentHashPlaceholder}`
 - **Protocol**: Sigil v0.1.0
+- **Registry**: https://github.com/dolhocodev/sigil
 - **Verification**: `sigil verify {id}`
 
 *Modifications to this document after signing invalidate all signatures.*

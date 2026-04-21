@@ -28,7 +28,7 @@
 2. **Split Calculation**: Gross revenue is split according to percentages above before any deductions except platform fees.
 3. **Payment Cycle**: Splits are settled monthly, within 15 days of period close.
 4. **Accounting**: Either party may request a statement at any time.
-5. **Dispute Resolution**: Disputes are resolved via the Sigil dispute protocol (sigil dispute {id}).
+5. **Dispute Resolution**: Disputes are resolved via the Sigil dispute protocol (`sigil dispute {id}`).
 
 ---
 
@@ -48,4 +48,11 @@ Upon dissolution of the venture, remaining assets are distributed per the split 
 
 - **Content Hash (SHA-256)**: `{contentHashPlaceholder}`
 - **Protocol**: Sigil v0.1.0
+- **Registry**: https://github.com/dolhocodev/sigil
 - **Verification**: `sigil verify {id}`
+
+*Modifications to this document after signing invalidate all signatures.*
+
+---
+
+*This agreement is a good-faith record of intent. It is not a substitute for professional legal counsel.*

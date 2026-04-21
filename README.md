@@ -14,10 +14,11 @@ directly into your Git history — no blockchain, no intermediaries, no trust re
 
 <br/>
 
-[![Protocol](https://img.shields.io/badge/Protocol-Sigil%20v0.1.0-7C3AED?style=for-the-badge&logo=git)](https://github.com/your-org/sigil)
-[![License](https://img.shields.io/badge/License-MIT-A78BFA?style=for-the-badge)](LICENSE)
+[![Protocol](https://img.shields.io/badge/Protocol-Sigil%20v0.1.0-7C3AED?style=for-the-badge&logo=git)](https://github.com/dolhocodev/sigil)
+[![License](https://img.shields.io/badge/License-AGPL--3.0-A78BFA?style=for-the-badge)](LICENSE)
 [![npm](https://img.shields.io/badge/npm-sigil--protocol-6D28D9?style=for-the-badge&logo=npm)](https://npmjs.com/package/sigil-protocol)
 [![Agreements](https://img.shields.io/badge/Agreements%20in%20Registry-0-4C1D95?style=for-the-badge)](registry/index.json)
+[![Site](https://img.shields.io/badge/Docs-dolhocodev.github.io%2Fsigil-4C1D95?style=for-the-badge&logo=github)](https://dolhocodev.github.io/sigil)
 
 </div>
 
@@ -127,7 +128,7 @@ sigil publish a3f9c12e
 ## Agreement Types
 
 | Template | Use Case | Command |
-|----------|----------|---------|
+|----------|----------|---------| 
 | `freelance` | Client ↔ contractor work agreement | `sigil init --template freelance` |
 | `cla` | Contributor License Agreement for OSS | `sigil init --template cla` |
 | `sla` | Service Level Agreement between teams | `sigil init --template sla` |
@@ -190,7 +191,7 @@ Replace your PDF CLA with a Sigil agreement:
 ```markdown
 ## Contributing
 
-We use [Sigil](https://github.com/your-org/sigil) for contributor agreements.
+We use [Sigil](https://github.com/dolhocodev/sigil) for contributor agreements.
 
 Before your first PR is merged, run:
 \`\`\`bash
@@ -231,7 +232,7 @@ sigil/
 
 ## Contributing
 
-1. Fork the registry
+1. Fork the repository
 2. Create your agreement: `sigil init`
 3. Sign it: `sigil sign <id>`
 4. Open a PR — GitHub Actions will auto-verify
@@ -259,7 +260,7 @@ All protocol changes are governed by a Sigil milestone agreement between maintai
 
 ## License
 
-MIT © Sigil Protocol Contributors
+AGPL-3.0 © [dolhocodev](https://github.com/dolhocodev) and Sigil Protocol Contributors
 
 ---
 
@@ -267,6 +268,6 @@ MIT © Sigil Protocol Contributors
 
 **Sigil** — *Ancient word. Cryptographic proof.*
 
-[Registry](registry/index.json) · [Templates](templates/) · [Schema](schema/) · [CLI](cli/sigil.js)
+[Registry](registry/index.json) · [Templates](templates/) · [Schema](schema/) · [CLI](cli/sigil.js) · [Docs](https://dolhocodev.github.io/sigil)
 
 </div>

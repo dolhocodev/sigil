@@ -40,9 +40,9 @@ This agreement is permanently bound to the Sigil protocol registry.
 
 - **Content Hash (SHA-256)**: `{contentHashPlaceholder}`
 - **Protocol**: Sigil v0.1.0
-- **Registry**: https://github.com/your-org/sigil
+- **Registry**: https://github.com/dolhocodev/sigil
 
-Any modification to this document after signing invalidates all cryptographic signatures.
+Any modification to this document after signing invalidates all cryptographic signatures.  
 Verification: `sigil verify {id}`
 
 ---

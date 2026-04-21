@@ -59,4 +59,11 @@ If uptime falls below the committed level in any calendar month:
 
 - **Content Hash (SHA-256)**: `{contentHashPlaceholder}`
 - **Protocol**: Sigil v0.1.0
+- **Registry**: https://github.com/dolhocodev/sigil
 - **Verification**: `sigil verify {id}`
+
+*Modifications to this document after signing invalidate all signatures.*
+
+---
+
+*This agreement is a good-faith record of intent. It is not a substitute for professional legal counsel.*

@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "description": "Your signature, sealed in history. A Git-native cryptographic agreement protocol.",
   "keywords": ["git", "gpg", "contracts", "agreements", "protocol", "cryptography", "signing"],
-  "homepage": "https://github.com/your-org/sigil",
+  "homepage": "https://dolhocodev.github.io/sigil",
+  "author": {
+    "name": "dolhocodev",
+    "email": "dolhocodev@gmail.com",
+    "url": "https://github.com/dolhocodev"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-org/sigil.git"
+    "url": "https://github.com/dolhocodev/sigil.git"
   },
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "bin": {
     "sigil": "./cli/sigil.js"
   },
